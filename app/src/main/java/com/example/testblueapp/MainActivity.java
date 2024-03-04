@@ -79,11 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
     private BluetoothGatt bluetoothGatt;
 
-    // Définir une table de correspondance entre les UUID et les noms de caractéristiques
-    HashMap<String, String> characteristicNames = new HashMap<>();
-
     // Créer une file d'attente pour les caractéristiques à lire
-    LinkedList<UUID> readQueue = new LinkedList<>();
+    //LinkedList<UUID> readQueue = new LinkedList<>();
+    LinkedList<UUID> readQueue = UUIDs.initializeCharacteristicQueue();
     private boolean isScanning = false;
 
     @Override
@@ -98,15 +96,7 @@ public class MainActivity extends AppCompatActivity {
         scan_button = findViewById(R.id.scan_button);
         scan_results_recycler_view = findViewById(R.id.scan_results_recycler_view);
 
-        // Ajouter les UUID des caractéristiques à la file d'attente
-        readQueue.add(UUID.fromString(String.valueOf(UUIDs.BATTERY_LEVEL_CHAR))); // Battery Level
-        readQueue.add(UUID.fromString(String.valueOf(UUIDs.BATTERY_STATUS_CHAR))); // Battery Status
-        readQueue.add(UUID.fromString(String.valueOf(UUIDs.TESTNAME_SPECIAL_ONE))); // Test Name Special One
 
-        // Ajouter les UUID et les noms de caractéristiques à la table de correspondance
-        characteristicNames.put(String.valueOf(UUIDs.BATTERY_LEVEL_CHAR), "Battery Health Information");
-        characteristicNames.put(String.valueOf(UUIDs.BATTERY_STATUS_CHAR), "Battery Health Status");
-        characteristicNames.put(String.valueOf(UUIDs.TESTNAME_SPECIAL_ONE), "Test Name Special One");
 
 
         scan_button.setOnClickListener(v -> {
@@ -427,7 +417,7 @@ public class MainActivity extends AppCompatActivity {
         // pour afficher les valeurs de caractéristiques lues
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             String uuid = characteristic.getUuid().toString();
-            String characteristicName = characteristicNames.get(uuid);
+            String characteristicName = UUIDs.characteristicNames.get(characteristic.getUuid()); // Utilisez directement la table de correspondance
 
             if (characteristicName != null) {
                 if (status == BluetoothGatt.GATT_SUCCESS) {
@@ -444,7 +434,7 @@ public class MainActivity extends AppCompatActivity {
                         String asciiValue = HexToAsciiConverter.hexToAscii(hexValue);
 
                         // Récupérer les données de la caractéristique
-                        String data = "Caractéristique : " + characteristicName +", Valeur : " + asciiValue;
+                        String data = characteristicName +", Valeur : " + asciiValue;
                         // Appeler la méthode pour enregistrer les données dans un fichier
                         dataRecorder.saveDataToFile(data);
 

@@ -27,9 +27,15 @@ public class DataRecorder {
             }
 
             // Nom du fichier
-            File file = new File(dir, "data_esayclaim.txt");
+            File file = new File(dir, "data_for_esayclaim.txt");
 
             try {
+                // Vérifier si le fichier existe déjà
+                if (!file.exists()) {
+                    // Créer le fichier s'il n'existe pas
+                    file.createNewFile();
+                }
+
                 // Ouvrir un flux de sortie vers le fichier
                 FileOutputStream fos = new FileOutputStream(file, true);
                 fos.write(data.getBytes());
@@ -41,10 +47,12 @@ public class DataRecorder {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         } else {
             Log.e("DataRecorder", "External storage not available for writing.");
         }
     }
+
 
     // Méthode pour effacer les données enregistrées
     public void clearData() {
@@ -55,7 +63,7 @@ public class DataRecorder {
             File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
 
             // Nom du fichier
-            File file = new File(dir, "data_esayclaim.txt");
+            File file = new File(dir, "data_for_esayclaim.txt");
             if (file.exists()) {
                 file.delete(); // Supprimer le fichier
                 Log.i("DataRecorder", "Data file deleted.");
