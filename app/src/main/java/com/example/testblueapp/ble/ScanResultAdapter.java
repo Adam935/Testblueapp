@@ -1,4 +1,4 @@
-package com.example.testblueapp;/*
+package com.example.testblueapp.ble;/*
  * Copyright 2019 Punch Through Design LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.testblueapp.R;
 
 import java.util.List;
 

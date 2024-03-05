@@ -68,7 +68,7 @@ public class BleExtensions {
         if (isWritableWithoutResponse(characteristic)) properties.append("WRITABLE WITHOUT RESPONSE ");
         if (isIndicatable(characteristic)) properties.append("INDICATABLE ");
         if (isNotifiable(characteristic)) properties.append("NOTIFIABLE ");
-        if (isEmpty(characteristic)) properties.append("EMPTY ");
+        //if (isEmpty(characteristic)) properties.append("EMPTY ");
         return properties.toString();
     }
 
@@ -106,7 +106,7 @@ public class BleExtensions {
         StringBuilder properties = new StringBuilder();
         if (isReadable(descriptor)) properties.append("READABLE ");
         if (isWritable(descriptor)) properties.append("WRITABLE ");
-        if (isEmpty(descriptor)) properties.append("EMPTY ");
+        //if (isEmpty(descriptor)) properties.append("EMPTY ");
         return properties.toString();
     }
 
@@ -134,13 +134,5 @@ public class BleExtensions {
         return descriptor.getUuid().toString().toUpperCase(Locale.US).equals(CCC_DESCRIPTOR_UUID.toUpperCase(Locale.US));
     }
 
-    // ByteArray
 
-    public static String toHexString(byte[] bytes) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (byte b : bytes) {
-            stringBuilder.append(String.format("%02X ", b));
-        }
-        return "0x" + stringBuilder.toString().trim();
-    }
 }
