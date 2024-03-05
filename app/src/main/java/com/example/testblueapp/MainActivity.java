@@ -136,12 +136,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 BluetoothDevice device = result.getDevice();
                 Log.w("ScanResultAdapter", "Connecting to " + device.getAddress());
+
                 // Connecter à GATT Server hébergé par ce périphérique
-                BluetoothGatt bluetoothGatt = device.connectGatt(MainActivity.this, false, gattCallback, transport, phy);
-
-                // Appeler printGattTable
-
-                printGattTable(bluetoothGatt);
+                 bluetoothGatt = device.connectGatt(MainActivity.this, false, gattCallback, transport, phy);
             }
         });
     }
